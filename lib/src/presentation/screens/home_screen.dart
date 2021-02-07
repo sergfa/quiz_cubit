@@ -94,13 +94,6 @@ class HomeScreen extends StatelessWidget {
                 TextButton.icon(
                   onPressed: () {
                     Navigator.of(bodyContext).pushNamed(RouteNames.SETTINGS);
-                    /* showDialog(
-                        context: bodyContext,
-                        builder: (context) => GameDailogBuilder.createDailaog(
-                            bodyContext,
-                            title: 'Correct answer',
-                            message: 'Good job!!!',
-                            buttonLabel: 'Next question')); */
                   },
                   icon: Icon(Icons.settings),
                   label: Text(

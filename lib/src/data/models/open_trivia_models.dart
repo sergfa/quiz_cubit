@@ -29,14 +29,15 @@ class OpenTriviaQuizItem extends Equatable {
   final int correctAnswerIndex;
   final List<String> allAnswers;
 
-  OpenTriviaQuizItem(
-      {this.category,
-      this.type,
-      this.difficulty,
-      this.question,
-      this.correctAnswer,
-      this.allAnswers,
-      this.correctAnswerIndex});
+  OpenTriviaQuizItem({
+    this.category,
+    this.type,
+    this.difficulty,
+    this.question,
+    this.correctAnswer,
+    this.allAnswers,
+    this.correctAnswerIndex,
+  });
 
   factory OpenTriviaQuizItem.fromMap(Map<String, dynamic> map) {
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
@@ -54,13 +55,14 @@ class OpenTriviaQuizItem extends Equatable {
       }
     }
     return OpenTriviaQuizItem(
-        category: stringToBase64.decode(map['category']),
-        type: map['type'],
-        difficulty: map['difficulty'],
-        question: stringToBase64.decode(map['question']),
-        correctAnswer: correctAnswer,
-        allAnswers: allAnswers,
-        correctAnswerIndex: correctAnswerIndex);
+      category: stringToBase64.decode(map['category']),
+      type: map['type'],
+      difficulty: map['difficulty'],
+      question: stringToBase64.decode(map['question']),
+      correctAnswer: correctAnswer,
+      allAnswers: allAnswers,
+      correctAnswerIndex: correctAnswerIndex,
+    );
   }
 
   factory OpenTriviaQuizItem.fromJson(String source) =>

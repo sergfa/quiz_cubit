@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:quiz_cubit/src/constants/constants.dart';
 import 'package:quiz_cubit/src/data/providers/open_trivia_quiz_provider.dart';
 import 'package:quiz_cubit/src/logic/cubit/opentriviaquiz_cubit.dart';
+import 'package:quiz_cubit/src/logic/cubit/score/score_cubit.dart';
 import 'package:quiz_cubit/src/presentation/screens/about_screen.dart';
 import 'package:quiz_cubit/src/presentation/screens/categoreis_screen.dart';
 import 'package:quiz_cubit/src/presentation/screens/home_screen.dart';
@@ -19,15 +20,15 @@ class AppRouter {
           builder: (_) => HomeScreen(),
         );
       case RouteNames.CATEGOREIS:
-        return MaterialPageRoute(builder: (_) {
-          var openTriviaQuizProvider = GetIt.instance<OpenTriviaQuizProvider>();
-          return CategoriesScreen(openTriviaQuizProvider.categories);
-        });
+        return MaterialPageRoute(
+          builder: (_) => CategoriesScreen(
+              GetIt.instance<OpenTriviaQuizProvider>().categories),
+        );
       case RouteNames.PLAY:
         var args = settings.arguments as Map;
         return MaterialPageRoute(
           builder: (_) => BlocProvider<OpenTriviaQuizCubit>(
-            create: (_) => OpenTriviaQuizCubit(),
+            create: (BuildContext context) => OpenTriviaQuizCubit(),
             child: PlayScreen(
               category: args['category'],
               amount: args['amount'],

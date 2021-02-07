@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_cubit/src/constants/open_trivia/open_trivia_constants.dart';
 import 'package:quiz_cubit/src/logic/cubit/opentriviaquiz_cubit.dart';
+import 'package:quiz_cubit/src/logic/cubit/score/score_cubit.dart';
 import 'package:quiz_cubit/src/presentation/widgets/dialog.dart';
 
 class PlayScreen extends StatefulWidget {
@@ -58,6 +59,9 @@ class PlayScreenState extends State<PlayScreen> {
         BlocProvider.of<OpenTriviaQuizCubit>(context).gameStarted();
       } else if (state is OpenTriviaQuizGameInProgress &&
           state.mode == OpenTriviaGameInProgressMode.CORRECT_ANSWER) {
+        BlocProvider.of<ScoreCubit>(context)
+            .updateScore(widget.category, state.score);
+
         buildShowCorrectAnswerDialog(context);
       } else if (state is OpenTriviaQuizGameInProgress &&
           state.mode == OpenTriviaGameInProgressMode.WRONG_ANSWER) {
@@ -237,7 +241,8 @@ class PlayScreenState extends State<PlayScreen> {
         });
   }
 
-  _buildNextQuestionDialog(String title, message, Color avatarColor, IconData avatarIcon) {
+  _buildNextQuestionDialog(
+      String title, message, Color avatarColor, IconData avatarIcon) {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -245,7 +250,7 @@ class PlayScreenState extends State<PlayScreen> {
         return GameDailogBuilder.createOkDailaog(
           context,
           avatarColor: avatarColor,
-          avatarIcon: avatarIcon ,
+          avatarIcon: avatarIcon,
           title: title,
           message: message,
           buttonLabel: 'Next',
@@ -265,21 +270,13 @@ class PlayScreenState extends State<PlayScreen> {
   }
 
   Future<dynamic> buildShowWrongAnswerDialog(BuildContext context) {
-    return _buildNextQuestionDialog(
-      'Wrong answer',
-      'You can do better!',
-      Colors.red,
-      Icons.error_outline_rounded
-    );
+    return _buildNextQuestionDialog('Wrong answer', 'You can do better!',
+        Colors.red, Icons.error_outline_rounded);
   }
 
   Future<dynamic> buildShowCorrectAnswerDialog(BuildContext context) {
-    return _buildNextQuestionDialog(
-      'Correct answer',
-      'You are getting better!',
-      Colors.green,
-      Icons.done_all_rounded
-    );
+    return _buildNextQuestionDialog('Correct answer', 'You are getting better!',
+        Colors.green, Icons.done_all_rounded);
   }
 
   buildShowEndGameDialog(BuildContext context) {

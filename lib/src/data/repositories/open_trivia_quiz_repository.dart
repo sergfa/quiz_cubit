@@ -30,4 +30,12 @@ class OpenTriviaQuizRepository {
     }
     throw Exception();
   }
+
+  Map<int, int> createCategoriesToScoreMap() {
+    final Map<int, int> catToScore = {};
+    openTriviaQuizProvider.categories.forEach((element) {
+      catToScore.putIfAbsent(element.value, () => 0);
+    });
+    return catToScore;
+  }
 }
